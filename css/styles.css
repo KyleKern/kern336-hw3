@@ -1,0 +1,31 @@
+html{
+    background-color: #424242;
+    text-align: center;
+    font-family: Helvetica, sans-serif;
+    color: black;
+    text-shadow: 0 0 10px rgba(255,255,255,1);
+    background-position: center;
+    font-size: 200%;
+}
+h1 {
+  display: inline-block;
+  padding: 10px;
+  border: none;
+  font: Helvetica, sans-serif;
+  color: black;
+  text-decoration: normal;
+  text-align: center;
+  
+}
+#button {
+    background-color: #53cc93;
+    border-color: black;
+    border: dotted;
+    border-radius: 12px;
+}
+h2{
+    padding: 10px;
+    font: Helvetica, sans-serif;
+    color: rgba(0,0,0,1);
+    text-align: center;
+}
