@@ -61,7 +61,7 @@ function pokemon(){
     <head>
         <title> Assignment 3</title>
         <style>
-            @import url("css/style.css");
+            @import url("css/styles.css");
             
         </style>
     </head>
