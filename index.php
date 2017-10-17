@@ -66,6 +66,7 @@ function displayDevices() {
                     $sql = $sql . " AND status = :status";
                     $namedParameters[':status'] = "available";
                 }
+                
                 if(isset($_GET['price']))
                 {
                     $sql = $sql . " AND price = :price";
@@ -93,17 +94,8 @@ function displayDevices() {
                     if ($sortN1='device')
                     {
                         $sql=$sql . 'ORDER BY deviceName';
-                    }
-                    
-                    
-                    }
-                    
-                
-                
-        
-    
-            
-    
+                }
+        }
             
       $statement= $dbConn->prepare($sql); 
       $statement->execute($namedParameters); //Always pass the named parameters, if any
@@ -112,8 +104,8 @@ function displayDevices() {
       echo '<table>';
       foreach($records as $record) {
           echo '<tr>';
-          echo "<input type='checkbox' name='cart[]'value =" . $record['deviceId'] . ">";
-          echo $record['deviceName'] . " - ". $record['deviceType'] .  " - ". $record['status'] . "<br/> ";
+         // echo "<input type='checkbox' name='cart[]'value =" . $record['deviceId'] . ">";
+          echo $record['deviceName'] . " - ". $record['deviceType'] .  " - ". $record['status'] . " - " . $record['price'] . "<br/> ";
       }
    
     
@@ -133,7 +125,7 @@ function displayDevices() {
          
          <form>
         
-            <td>Device:
+            <td> Device:
     
             <input Type="text" name ="deviceName" placeholder ="Device Name" >
              Type: 
@@ -142,13 +134,13 @@ function displayDevices() {
                  <?=getDeviceTypes()?>
              </select>
              
-             <input type= "checkbox" name= "available" id ="available" value="available">
+             <input type= "radio" name= "available" id ="available" value="available">
              <label for="available" > Available</label>
              
-             <input type= "checkbox" name= "sort" id ="sort" value="sort">
+             <input type= "radio" name= "sort" id ="sort" value="sort">
              <label for="sort" > Sort By Price</label>
              
-              <input type= "checkbox" name= "sort1" id ="sort1" value="sort1">
+              <input type= "radio" name= "sort1" id ="sort1" value="sort1">
              <label for="sort1" > Sort By Name</label>
              
              <input type="submit" name ="submit" value="Search"/></td>
@@ -158,7 +150,6 @@ function displayDevices() {
          <form action="displayCart.php">
            <?=displayDevices()?>  
            <br />
-           <input type="submit" value="Continue">
          </form>  
         
         
