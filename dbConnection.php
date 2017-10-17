@@ -1,7 +1,7 @@
 <?php
 
 function getDatabaseConnection($dbname){
-    $host = "localhost";
+    $host = "heroku_87e7042268995be";
     $username = "bbabc890c66b77";
     $password = "ed6002a9";
     
