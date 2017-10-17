@@ -1,0 +1,32 @@
+html{
+    background-color: #85929E;
+    text-align: center;
+    font-family: Helvetica, sans-serif;
+    color: black;
+    text-shadow: 0 0 10px rgba(255,255,255,1);
+
+    font-size: 200%;
+}
+h1 {
+  display: inline-block;
+  padding: 10px;
+  border: none;
+  font: Helvetica, sans-serif;
+  color: black;
+  text-decoration: normal;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(55, 186, 124,1) , 0 0 20px rgba(55, 186, 124,1) , 0 0 30px rgba(55, 186, 124,1) , 0 0 40px #424242 , 0 0 70px #424242 , 0 0 80px #424242 , 0 0 100px #424242 ;
+  transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+#button {
+    background-color: #53cc93;
+    border-color: black;
+    border: dotted;
+    border-radius: 12px;
+}
+h2{
+    padding: 10px;
+    font: Helvetica, sans-serif;
+    color: rgba(0,0,0,1);
+    text-align: center;
+}
