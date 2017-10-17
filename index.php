@@ -1,6 +1,6 @@
 <?php
 
-include '../includes/dbConnection.php';
+include 'dbConnection.php';
 
 $dbConn = getDatabaseConnection('tech_checkout');
 
