@@ -2,7 +2,7 @@
 
 include 'dbConnection.php';
 
-$dbConn = getDatabaseConnection('tech_checkout');
+$dbConn = getDatabaseConnection('heroku_87e7042268995be');
 
 function getDeviceTypes(){
     global $dbConn;
