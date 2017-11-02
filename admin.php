@@ -1,10 +1,9 @@
 <?php
 session_start();
 
-//if (!isset($_SESSION['username'])) {
-//    header('Location: login.php'); //sends users back to login screen if they haven't logged in
-//    exit;
-//}
+if (!isset($_SESSION['username'])) {  //checks whether the admin is logged in
+    header("Location: index.php");
+}
 
 include 'dbConnection.php';
 
