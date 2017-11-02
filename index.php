@@ -134,13 +134,13 @@ function displayDevices() {
                  <?=getDeviceTypes()?>
              </select>
              
-             <input type= "radio" name= "available" id ="available" value="available">
+             <input type= "checkbox" name= "available" id ="available" value="available">
              <label for="available" > Available</label>
              
-             <input type= "radio" name= "sort" id ="sort" value="sort">
+             <input type= "checkbox" name= "sort" id ="sort" value="sort">
              <label for="sort" > Sort By Price</label>
              
-              <input type= "radio" name= "sort1" id ="sort1" value="sort1">
+              <input type= "checkbox" name= "sort1" id ="sort1" value="sort1">
              <label for="sort1" > Sort By Name</label>
              
              <input type="submit" name ="submit" value="Search"/></td>
