@@ -7,7 +7,7 @@
     function getDepartments() {
         global $dbConn;
         $sql = "SELECT deptName, departmentId 
-                FROM department 
+                FROM department,
                 ORDER BY deptName ASC";
                 
         $statement = $dbConn->prepare($sql);
@@ -112,21 +112,19 @@
                    <option value="student" <?= checkRole("student") ?>  >Student</option>
                    <option value="faculty" <?= checkRole("faculty") ?>>Faculty</option>
           </select>
-            <br />
-            Department: 
+          <br />
+            Department:
             <select name="deptId">
-                <option value=""> - Select One - </option>
-                <option value="1" > computer science</option>
-                <option value="2" >Statistics</option>
-                <option value="3" >Design</option>
-                <option value="4" >Economics</option>
-                <option value="5" >Drama</option>
-                <option value="6" >Biology</option>
-            </select>
+                <option value="" > - Select One - </option>
+                <option value="Math" <?=($user['deptId']=="1")?' selected':'' ?> >Math</option>
+                <option value="Computer Sci" <?=($user['deptId']=="2")?' selected':'' ?> >Computer Sci</option>
+                <option value="Game Design"   <?=($user['deptId']=="3")?' selected':'' ?> >Game Design</option>
+                <option value="Finance" <?=($user['deptId']=="4")?' selected':'' ?> >Finance</option>
+                <option value="Accounting" <?=($user['deptId']=="5")?' selected':'' ?> >Accounting</option>
+                <option value="Biology"   <?=($user['deptId']=="6")?' selected':'' ?> >Biology</option>
+           </select>
             <input type="submit" value="Update User" name="updateUser">
         </form>
         </fieldset>
-
-
     </body>
 </html>
