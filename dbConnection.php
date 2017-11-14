@@ -15,6 +15,4 @@ function getDatabaseConnection($dbname){
     return $dbConn;    
 }
 
-
-
 ?>
