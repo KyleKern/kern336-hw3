@@ -8,7 +8,7 @@ function getItems(){
     $namedParameters = array();
     $results = null;
     if(isset($_GET['submit'])){
-       // $sql = "select * from films union select * from games union select * from music ";
+        $sql = "select * from films union select * from games union select * from music ";
         if(isset($_GET['category'])){
             $value = $_GET['category'];
             if($value == "films"){
@@ -19,7 +19,7 @@ function getItems(){
                 $sql = "select * from music";
             }
         }
-         $sql = "select * from films union select * from games union select * from music ";
+        
         //Show only items that are available
         if (isset($_GET['status']) ) { 
             $sql .= " WHERE Quantity > 0  ";
