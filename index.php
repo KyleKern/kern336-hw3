@@ -8,7 +8,7 @@ function getItems(){
     $namedParameters = array();
     $results = null;
     if(isset($_GET['submit'])){
-        $sql = "select * from films union select * from games union select * from music ";
+       // $sql = "select * from films union select * from games union select * from music ";
         if(isset($_GET['category'])){
             $value = $_GET['category'];
             if($value == "films"){
@@ -19,7 +19,7 @@ function getItems(){
                 $sql = "select * from music";
             }
         }
-        
+         $sql = "select * from films union select * from games union select * from music ";
         //Show only items that are available
         if (isset($_GET['status']) ) { 
             $sql .= " WHERE Quantity > 0  ";
@@ -37,8 +37,9 @@ function getItems(){
         $stmt = $con -> prepare ($sql);
         $stmt -> execute($namedParameters);
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        echo "<table id=\"table1\">
+        echo "<table id=\"t01\">
             <tr>
+            <th>Id</th>
  	        <th>Title</th>
          	<th>Creator</th>
          	<th>Quantity (in stock)</th>
@@ -47,23 +48,15 @@ function getItems(){
          </tr>";
         foreach($results as $result) {
             echo "<tr>";
-            echo "<td><a href=\"info.php?name=".$result['name']. "&id=" . 
-                $result['id'] . "&Title=" . 
-                $result['Title'] . "&Creator=" . 
-                $result['Creator'] . "&Description=" . 
-                $result['Description'] . "&Quantity=" . 
-                $result['Quantity'] . "&Price=" . 
-                $result['Price']."\">" . $result['Title'] . "</a></td>";
+            echo "<td>".$result['id']."</td>";
+            // this will be where we display the description
+            echo "<td><a href=\"itemInfo.php?name=".$result['Title']. "&id=" .
+                        $result['id']."\">" . $result['Title'] ."</a></td>";
             echo "<td>".$result['Creator']."</td>";
             echo "<td>".$result['Quantity']."</td>";
             echo "<td>".$result['Price']."</td>";
-            if($result['Quantity'] == 0){
-                echo "<td> Out of Stock </td>";
-            } else {
-                echo "<td><a href=\"add-to-cart.php?name=".$result['name']. "&id=" .
+            echo "<td><a href=\"cart.php?name=".$result['name']. "&id=" .
                     $result['id']."\">Add to cart</a></td>";
-            }
-            
             echo "</tr>";
         }
         echo "</table>";
@@ -96,9 +89,6 @@ function getItems(){
   	<input type="radio" name="price" value="desc"> Descending
   	<input type="submit" value="Search" name="submit" />
 
-</form>
-<form id='cart' form action="./cart.php" method="get" >
-            <input type="submit" value="Cart">
 </form>
 
 <br />
