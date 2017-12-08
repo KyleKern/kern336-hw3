@@ -1,12 +1,9 @@
 <?php
 session_start();
-
 if (!isset($_SESSION['username'])) {  //checks whether the admin is logged in
-    header("Location: index.php");
+    header("Location: adminMain.php");
 }
-
 include 'dbConnection.php';
-
 $dbConn = getDatabaseConnection('heroku_87e7042268995be');
 
 function listUsers() {
@@ -20,23 +17,50 @@ function listUsers() {
     return $users;
 }
 
-?>
+function csCount(){
+ global $dbConn;
+    $sql = "SELECT count(userId) 
+            FROM user
+            WHERE deptId=2";
+    $statement = $dbConn->prepare($sql);
+    $statement->execute();
+    $count = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $count;
+}
 
+function greatestCredits(){
+    global $dbConn;
+    $sql = "SELECT max(credits) 
+            FROM course";
+    $statement = $dbConn->prepare($sql);
+    $statement->execute();
+    $max = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $max;
+}
+
+function mostPopular(){
+    global $dbConn;
+    $sql = "SELECT max(course_id) 
+            FROM user";
+    $statement = $dbConn->prepare($sql);
+    $statement->execute();
+    $popular = $statement->fetchAll(PDO::FETCH_ASSOC);
+     echo $popular['course_id']; 
+    return $popular;
+}
+
+?>
 <!DOCTYPE html>
 <html>
     <head>
-        <title> Tech Center - Admin Page</title>
-        <link rel="stylesheet" href="css/main.css" type="text/css" />
-          <style>
-            
+        <title> CSUMB Update Students</title>
+        <link rel="stylesheet" href="styles.css">
+        <style>
+        
 
-        body {
-    background-image: url("bluebg.jpg");
-}
         </style>
         <script>
         
-
             function confirmDelete(firstName) {
                 
                 return confirm("Are you sure you wanna delete " + firstName + "?");
@@ -45,13 +69,19 @@ function listUsers() {
             
         </script>
         
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
   
-       <h1> Tech Center - Admin Page  </h1>
+       <h1> CSUMB - Admin Page  </h1>
 
         <h2> Welcome  <?=$_SESSION['adminName']?>  </h2>
-      
+       <form action="reports.php">
+            <input type="submit" value="Reports!" />
+        </form>
+        </br>
         <form action="logout.php">
             <input type="submit" value="Logout!" />
         </form>

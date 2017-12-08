@@ -1,8 +1,37 @@
+<script>
+     function validateEmail() {
+         
+            
+            
+            $.ajax({
+                type: "GET",
+                url: "https://kern336-hw3-kylekern.c9users.io/usernameLookup.php",
+                dataType: "json",
+                data: {
+                    'email': $('#email').val(),
+                    'action': 'validate-username'
+                },
+                success: function(data,status) {
+                    debugger;
+                    if (data.length>0) {
+                        $('#username-valid').html("Email is not available");
+                        $('#username-valid').css("color", "red");
+                    } else {
+                        $('#username-valid').html("Email is available"); 
+                        $('#username-valid').css("color", "green");
+                    }
+                  },
+                complete: function(data,status) { 
+                    //optional, used for debugging purposes
+                    //alert(status);
+                }
+            });
+                }
+</script>
 <?php
 
     include 'dbConnection.php';
     $dbConn = getDatabaseConnection('heroku_87e7042268995be');
-
     
     function getDepartments() {
         global $dbConn;
@@ -58,7 +87,8 @@
                     phone= :phone,
                     email= :email,
                     role = :role,
-                    deptId = :deptId
+                    deptId = :deptId,
+                    course_id= :course
                     
                 WHERE userId = :userId";
         $namedParameters = array();
@@ -69,6 +99,7 @@
         $namedParameters[":role"]      = $_POST['role'];
         $namedParameters[":userId"]    = $_POST['userId'];
         $namedParameters[":deptId"] =$_POST['deptId'];
+        $namedParameters[":course"] =$_POST['course'];
         $statement = $dbConn->prepare($sql);
         $statement->execute($namedParameters);
     }
@@ -88,11 +119,13 @@
 <html>
     <head>
         <title> Admin: Update User</title>
+        	<link rel="stylesheet" href="styles.css">
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
-
-
-       <h1> Tech Checkout System</h1>
+       <h1> CSUMB Enrollment </h1>
        <fieldset>
         <legend> Update User</legend>
         <form method="POST">
@@ -102,7 +135,7 @@
             <br />
             Last Name:<input type="text" name="lastName" value="<?=$user['lastName']?>" />
             <br/>
-            Email: <input type= "email" name ="email" value="<?=$user['email']?>"/>
+            Email: <input id="email" onchange="validateEmail();" type="text" name ="email" value="<?=$user['email']?>"/><span id="username-valid"></span><br>
             <br/>
             Phone Number: <input type ="text" name= "phone" value="<?=$user['phone']?>"/>
             <br />
@@ -123,6 +156,9 @@
                 <option value="Accounting" <?=($user['deptId']=="5")?' selected':'' ?> >Accounting</option>
                 <option value="Biology"   <?=($user['deptId']=="6")?' selected':'' ?> >Biology</option>
            </select>
+           <br/>
+           Course Number:<input  type= "text" name ="course" value="<?=$user['course_id']?>"/>
+            <br/>
             <input type="submit" value="Update User" name="updateUser">
         </form>
         </fieldset>

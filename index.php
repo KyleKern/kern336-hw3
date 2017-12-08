@@ -8,29 +8,31 @@ function getItems(){
     $namedParameters = array();
     $results = null;
     if(isset($_GET['submit'])){
-        $sql = "select * FROM (select * from films union select * from games union select * from music) as U ";
+        $sql = "select * FROM course";
         if(isset($_GET['category'])){
             $value = $_GET['category'];
-            if($value == "films"){
-                $sql = "select * from films as U";
-            }elseif($value == "games"){
-                $sql = "select * from games as U";
-            }elseif($value == "music"){
-                $sql = "select * from music as U";
+            if($value == "Math"){
+                $sql .= " where deptId = 1";
+            }elseif($value == "CS"){
+             $sql .= " where deptId = 2";
+            }elseif($value == "Gamedesign"){
+               $sql .= " where deptId = 3";
+            }elseif($value == "Finance"){
+                $sql .= " where deptId = 4";
+            }elseif($value == "Accounting"){
+              $sql .= " where deptId = 5";
+            }elseif($value == "Biology"){
+                $sql .= " where deptId = 6";
             }
         }
         
-        //Show only items that are available
-        if (isset($_GET['status']) ) { 
-            $sql .= " WHERE U.Quantity > 0  ";
-        }
         //order items by price asc or desc
-        if(isset($_GET['price'])){
-            if($_GET['price'] == "asc"){
-                $sql .=  " order by Price";
+        if(isset($_GET['credits'])){
+            if($_GET['credits'] == "asc"){
+                $sql .=  " order by credits";
             }
             else{
-                $sql .= " order by Price desc";
+                $sql .= " order by credits desc";
             }
         }
 
@@ -39,31 +41,23 @@ function getItems(){
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         echo "<table id=\"table1\">
             <tr>
- 	        <th>Title</th>
-         	<th>Creator</th>
-         	<th>Quantity (in stock)</th>
-         	<th>Price</th>
+            <th> course_id </th>
+ 	        <th> Name </th>
+         	<th> deptId </th>
+         	<th> credits </th>
          	<th></th>
          </tr>";
         foreach($results as $result) {
             echo "<tr>";
-            echo "<td><a href=\"info.php?name=".$result['name']. "&id=" . 
-                $result['id'] . "&Title=" . 
-                $result['Title'] . "&Creator=" . 
-                $result['Creator'] . "&Description=" . 
-                $result['Description'] . "&Quantity=" . 
-                $result['Quantity'] . "&Price=" . 
-                $result['Price']."\">" . $result['Title'] . "</a></td>";
-            echo "<td>".$result['Creator']."</td>";
-            echo "<td>".$result['Quantity']."</td>";
-            echo "<td>".$result['Price']."</td>";
-            if($result['Quantity'] == 0){
-                echo "<td> Out of Stock </td>";
-            } else {
-                echo "<td><a href=\"add-to-cart.php?name=".$result['name']. "&id=" .
-                    $result['id']."\">Add to cart</a></td>";
-            }
-            
+            echo "<td><a href=\"info.php?name=".$result['name']. "&course_id=" . 
+                $result['course_id'] . "&name=" . 
+                $result['name'] . "&deptId=" . 
+                $result['deptId'] . "&credits=" . 
+                $result['credits'] . 
+                "\">" . $result['course_id'] . "</a></td>";
+            echo "<td>".$result['name']."</td>";
+            echo "<td>".$result['deptId']."</td>";
+            echo "<td>".$result['credits']."</td>";
             echo "</tr>";
         }
         echo "</table>";
@@ -74,33 +68,35 @@ function getItems(){
 <!DOCTYPE html>
 <head>
 	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body background="background.jpg">
 	<div id = "wrapper">
-	<h2 style="color: black"> Games, Movies, and Music</h2></h2>
+	<h2 style="color: black"> CSUMB Enrollment Simulator 2017</h2></h2>
 <form id="indexForm">
 	<br /> <br />
     
     <!--I was thinking we can use category to pick the table, but I just get errors when I try to use a variable-->
     <!--or named parameter for table in sql statement-->
-    Category: <input type="radio" name="category" value="films" ><label for="films"> Films </label>
-            <input type="radio" name="category" value="games" > <label for="games">  Games </label>
-            <input type="radio" name="category" value="music" > <label for="music">  Music </label>
+    Category: <input type="radio" name="category" value="Math" ><label for="Math"> Math </label>
+            <input type="radio" name="category" value="CS" > <label for="CS">  CS </label>
+            <input type="radio" name="category" value="Gamedesign" > <label for="Gamedesign">  Econ </label>
+            <input type="radio" name="category" value="Finance" > <label for="Finance">  Finance </label>
+            <input type="radio" name="category" value="Accounting" > <label for="Accounting">  Accounting </label>
+            <input type="radio" name="category" value="Biology" > <label for="Biology">  Biology </label>
     <br />
-    <input type="checkbox" name="status" id="status"/>
-    <label for="status"> Show Available Items Only </label>
+  
 
     <br />
-    <label for="price">Sort by:</label>
-    <input type="radio" name="price" value="asc"> Ascending
-  	<input type="radio" name="price" value="desc"> Descending
+    <label for="credits">Sort by credits:</label>
+    <input type="radio" name="credits" value="asc"> Ascending
+  	<input type="radio" name="credits" value="desc"> Descending
+  	
   	<input type="submit" value="Search" name="submit" />
 
 </form>
-<form id='cart' form action="./cart.php" method="get" >
-            <input type="submit" value="Cart">
-</form>
-
 <br />
 <br />
 <br />
@@ -113,6 +109,9 @@ function getItems(){
  </center>
 
  </div>
+ <form id='admin' form action="./login.php" method="get" >
+            <input type="submit" value="admin">
+</form>
 </body>
 
  </html>

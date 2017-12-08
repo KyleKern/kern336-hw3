@@ -1,7 +1,5 @@
 <?php
-
   //Check that the session is active
-
     include 'dbConnection.php';
     $dbConn = getDatabaseConnection('heroku_87e7042268995be');
     
@@ -59,10 +57,14 @@
 <html>
     <head>
         <title> Admin: Add new user</title>
+        <link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
 
-       <h1> Tech Checkout System: Adding a New User </h1>
+       <h1> CSUMB: Adding a New Student </h1>
         <form method="POST">
             User Id: <input type="text" name="userId" />
             <br />
