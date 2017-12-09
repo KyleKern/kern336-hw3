@@ -5,7 +5,7 @@
             
             $.ajax({
                 type: "GET",
-                url: "https://kern336-hw3-kylekern.c9users.io/usernameLookup.php",
+                url: "https://kern336-lab5.herokuapp.com/usernameLookup.php",
                 dataType: "json",
                 data: {
                     'email': $('#email').val(),
